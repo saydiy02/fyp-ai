@@ -154,6 +154,10 @@
                             Nmap & PwnXSS
                         {% elif entry.suggest == 1 %}
                             Nmap & XSStrike
+                        {% elif entry.suggest == 2 %}
+                            Nmap & Burp Suite
+                        {% elif entry.suggest == 3 %}
+                            Nmap & OWASP ZAP
                         {% else %}
                             Unknown
                         {% endif %}
@@ -173,6 +177,8 @@
             <a href="{% url 'nmap_tool' %}">Run Nmap</a>
             <a href="{% url 'run_pwnxss' %}">Run PwnXSS</a>
             <a href="{% url 'run_xsstrike' %}">Run XSStrike</a>
+            <a href="{% url 'burpsuite' %}">Burp Suite</a>
+            <a href="{% url 'owasp_zap' %}">OWASP ZAP</a>
             <a href="{% url 'logout' %}">Logout</a>
         </div>
     </div>

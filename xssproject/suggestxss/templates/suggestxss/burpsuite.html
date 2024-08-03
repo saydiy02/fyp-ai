@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Burp Suite</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -37,7 +37,7 @@
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
-            allign-items: center;
+            align-items: center;
         }
         a {
             text-decoration: none;
@@ -61,18 +61,11 @@
 </head>
 <body>
     <div class="container">
-        <h2>Welcome, {{ request.user.username }}</h2>
+        <h2>Burp Suite</h2>
+        <p>Burp Suite is an integrated platform for performing security testing of web applications. It includes all the tools you need to carry out comprehensive testing, from initial mapping and analysis of an application's attack surface to finding and exploiting security vulnerabilities.</p>
         <div class="button-container">
-            <a href="{% url 'new_data' %}">Add New Data</a>
-            <a href="{% url 'view_data' %}">View Your Data</a>
-            <a href="{% url 'nmap_tool' %}">Run Nmap</a>
-            <a href="{% url 'run_pwnxss' %}">Run PwnXSS</a>
-            <a href="{% url 'run_xsstrike' %}">Run Xsstrike</a>
-            <a href="{% url 'burpsuite' %}">Burp Suite</a>
-            <a href="{% url 'owasp_zap' %}">Run OWASP ZAP</a>
-            <a href="{% url 'tool_results' %}">Tools History</a>
-            <a href="{% url 'upload_and_train' %}">Training Dataset</a>
-            <a href="{% url 'logout' %}">Logout</a>
+            <a href="https://portswigger.net/burp/documentation/desktop/getting-started">Download Burp Suite</a>
+            <a href="{% url 'dashboard' %}">Back to Dashboard</a>
         </div>
     </div>
 </body>

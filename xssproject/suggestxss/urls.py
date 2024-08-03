@@ -19,6 +19,8 @@ urlpatterns = [
     path('run_xsstrike/', views.run_xsstrike, name='run_xsstrike'),
     path('tool_results/', views.tool_results, name='tool_results'),
     path('delete_tool_result/<int:result_id>/', views.delete_tool_result, name='delete_tool_result'),
+    path('burpsuite/', views.burpsuite, name='burpsuite'),
+    path('owasp_zap/', views.owasp_zap, name='owasp_zap'),
     path('upload_and_train/', views.upload_and_train, name='upload_and_train'),
     path('submit_feedback/', views.submit_feedback, name='submit_feedback'),
 ]

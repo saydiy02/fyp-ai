@@ -167,7 +167,13 @@
                 <td>{{ data.get_automation_display }}</td>
                 <td>{{ data.get_platform_display }}</td>
                 <td>
-                    {% if data.suggest == 0 or data.suggest == 1 %}
+                    {% if data.suggest == 0 %}
+                        <a class="suggestion-link" href="{% url 'nmap_tool' %}">Nmap</a>
+                    {% elif data.suggest == 1 %}
+                        <a class="suggestion-link" href="{% url 'nmap_tool' %}">Nmap</a>
+                    {% elif data.suggest == 2 %}
+                        <a class="suggestion-link" href="{% url 'nmap_tool' %}">Nmap</a>
+                    {% elif data.suggest == 3 %}
                         <a class="suggestion-link" href="{% url 'nmap_tool' %}">Nmap</a>
                     {% else %}
                         Unknown
@@ -178,6 +184,10 @@
                         <a class="suggestion-link" href="{% url 'run_pwnxss' %}">PwnXSS</a>
                     {% elif data.suggest == 1 %}
                         <a class="suggestion-link" href="{% url 'run_xsstrike' %}">XSStrike</a>
+                    {% elif data.suggest == 2 %}
+                        <a class="suggestion-link" href="{% url 'burpsuite' %}">Burp Suite</a>
+                    {% elif data.suggest == 3 %}
+                        <a class="suggestion-link" href="{% url 'owasp_zap' %}">OWASP ZAP</a>
                     {% else %}
                         Unknown
                     {% endif %}

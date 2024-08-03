@@ -25,7 +25,7 @@ from django.conf import settings
 def load_model():
     print("Executing load_model function")
     try:
-        with open('svmxss.pkl', 'rb') as f:
+        with open('svmxssmany.pkl', 'rb') as f:
             model = joblib.load(f)
     except FileNotFoundError:
         model = retrain_model()
@@ -46,7 +46,7 @@ def retrain_model():
     model = SVC()
     model.fit(X_train, y_train)
     
-    with open('svmxss.pkl', 'wb') as f:
+    with open('svmxssmany.pkl', 'wb') as f:
         joblib.dump(model, f)
     
     print("Finished executing retrain_model function")
@@ -249,6 +249,14 @@ def run_pwnxss(request):
     print("Finished executing run_pwnxss function")
     return render(request, 'suggestxss/run_pwnxss.html')
 
+def burpsuite(request):
+    print("Executing burpsuite function successfully")
+    return render(request, 'suggestxss/burpsuite.html')
+    
+def owasp_zap(request):
+    print("Executing owasp_zap function successfully")
+    return render(request, 'suggestxss/owasp_zap.html')
+    
 @login_required
 def tool_results(request):
     print("Executing tool_results function")

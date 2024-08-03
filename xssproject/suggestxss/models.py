@@ -9,7 +9,7 @@ class UserData(models.Model):
     skill = models.IntegerField(choices=[(0, 'Beginner'), (1, 'Intermediate'), (2, 'Advanced')])
     automation = models.IntegerField(choices=[(0, 'No'), (1, 'Yes')])
     platform = models.IntegerField(choices=[(0, 'Windows'), (1, 'Linux'), (2, 'MacOS')])
-    suggest = models.IntegerField(choices=[(0, 'Nmap & PwnXSS'), (1, 'Nmap & XSStrike')])
+    suggest = models.IntegerField(choices=[(0, 'Nmap & PwnXSS'), (1, 'Nmap & XSStrike'), (2, 'Nmap & Burp Suite'), (3, 'Nmap & OWASP ZAP')])
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
