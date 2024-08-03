@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nmap Tool</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FFF2CC;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #FFF7E0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 80%;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: calc(100% - 22px);
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            color: #000;
+            background-color: #FFDB58;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #E1C16E;
+        }
+        pre {
+            text-align: left;
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Nmap Tool</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="target" placeholder="Enter target IP or domain">
+            <button type="submit">Run Nmap</button>
+        </form>
+        {% if output %}
+            <pre>{{ output }}</pre>
+        {% endif %}
+        <div class="button-container">
+            <a href="{% url 'dashboard' %}"><button>Back</button></a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Data</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FFF2CC;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #FFF7E0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 80%;
+            max-width: 1200px;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .filter-container {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .filter-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #FFDB58;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        a {
+            text-decoration: none;
+            padding: 10px 20px;
+            color: #000;
+            background-color: #ffdb58;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        a:hover {
+            background-color: #E1C16E;
+        }
+        .delete-button {
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(formId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(formId).submit();
+                }
+            });
+        }
+
+        function filterTable() {
+            const filter = document.getElementById('filter-input').value.toLowerCase();
+            const rows = document.querySelectorAll('table tbody tr');
+
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                let isMatch = false;
+
+                for (let i = 0; i < cells.length; i++) {
+                    if (cells[i].textContent.toLowerCase().includes(filter)) {
+                        isMatch = true;
+                        break;
+                    }
+                }
+
+                row.style.display = isMatch ? '' : 'none';
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Your Data</h2>
+        <div class="filter-container">
+            <input type="text" id="filter-input" class="filter-input" onkeyup="filterTable()" placeholder="Search in table...">
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Created At</th>
+                    <th>Goal</th>
+                    <th>Attack Type</th>
+                    <th>Skill Level</th>
+                    <th>Automation</th>
+                    <th>Platform</th>
+                    <th>Suggestion</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in data %}
+                <tr>
+                    <td>{{ entry.created_at }}</td>
+                    <td>{{ entry.get_goal_display }}</td>
+                    <td>{{ entry.get_attackT_display }}</td>
+                    <td>{{ entry.get_skill_display }}</td>
+                    <td>{{ entry.get_automation_display }}</td>
+                    <td>{{ entry.get_platform_display }}</td>
+                    <td>
+                        {% if entry.suggest == 0 %}
+                            Nmap & PwnXSS
+                        {% elif entry.suggest == 1 %}
+                            Nmap & XSStrike
+                        {% else %}
+                            Unknown
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form id="delete-form-{{ entry.id }}" method="post" action="{% url 'delete_data' entry.id %}">
+                            {% csrf_token %}
+                            <button type="button" class="delete-button" onclick="confirmDelete('delete-form-{{ entry.id }}')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="button-container">
+            <a href="{% url 'new_data' %}">Add New Data</a>
+            <a href="{% url 'nmap_tool' %}">Run Nmap</a>
+            <a href="{% url 'run_pwnxss' %}">Run PwnXSS</a>
+            <a href="{% url 'run_xsstrike' %}">Run XSStrike</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
+

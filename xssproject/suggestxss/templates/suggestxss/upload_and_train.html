@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Train Model</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FFF2CC;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #FFF7E0;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        button {
+            padding: 12px 24px;
+            color: #000;
+            background-color: #FFDB58;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background-color: #E1C16E;
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #FFF7E0;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .result a {
+            text-decoration: none;
+            padding: 12px 24px;
+            color: #000;
+            background-color: #FFDB58;
+            border-radius: 6px;
+            transition: background-color 0.3s, transform 0.3s;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .result a:hover {
+            background-color: #E1C16E;
+            transform: scale(1.05);
+        }
+        .back-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .back-button a {
+            text-decoration: none;
+            padding: 12px 24px;
+            color: #000;
+            background-color: #FFDB58;
+            border-radius: 6px;
+            transition: background-color 0.3s, transform 0.3s;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .back-button a:hover {
+            background-color: #E1C16E;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload CSV and Train Model</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Upload and Train</button>
+        </form>
+        {% if accuracy %}
+            <div class="result">
+                <h2>Model Accuracy: {{ accuracy }}</h2>
+                <a href="{{ download_link }}">Download Model PKL</a>
+            </div>
+        {% endif %}
+        <div class="back-button">
+            <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

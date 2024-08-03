@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run XSStrike</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff2cc;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #FFF7E0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="url"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #FFDB58;
+            border: none;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #E1C16E;
+        }
+        .output {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .back-button {
+            text-decoration: none;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Run XSStrike</h1>
+        <form method="post">
+            {% csrf_token %}
+            <input type="url" name="url" placeholder="Enter URL" required>
+            <button type="submit">Run XSStrike</button>
+        </form>
+        {% if output %}
+            <h2>Output:</h2>
+            <div class="output">{{ output }}</div>
+        {% elif error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+        <div class="button-container">
+            <a href="{% url 'dashboard' %}" class="back-button"><button type="button">Back</button></a>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

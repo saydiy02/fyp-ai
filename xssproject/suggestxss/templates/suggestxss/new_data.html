@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penetration Testing Tools</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #FFF2CC;
+            color: #444;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #FFF7E0;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        input[type="email"],
+        select {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button[type="submit"] {
+            padding: 12px 20px;
+            background-color: #FFDB58;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button[type="submit"]:hover {
+            background-color: #E1C16E;
+            transform: scale(1.05);
+        }
+        .form-buttons {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Form for Tools Suggestion</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            <label for="goal">Choose your goal:</label>
+            <select name="goal" id="goal">
+                <option value="0">Web-application</option>
+                <option value="1">API</option>
+                <option value="2">Mobile-application</option>
+            </select>
+
+            <label for="attackT">Choose your XSS attack type:</label>
+            <select name="attackT" id="attackT">
+                <option value="0">Reflected</option>
+                <option value="1">Stored</option>
+                <option value="2">Dom-based</option>
+            </select>
+
+            <label for="skill">Choose your skill level:</label>
+            <select name="skill" id="skill">
+                <option value="0">Beginner</option>
+                <option value="1">Intermediate</option>
+                <option value="2">Advanced</option>
+            </select>
+
+            <label for="automation">Choose your automation level:</label>
+            <select name="automation" id="automation">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+
+            <label for="platform">Choose your platform:</label>
+            <select name="platform" id="platform">
+                <option value="0">Windows</option>
+                <option value="1">Linux</option>
+                <option value="2">MacOS</option>
+            </select>
+
+            <div class="form-buttons">
+                <button type="submit" name="next">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

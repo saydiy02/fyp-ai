@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FFF2CC;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #FFF7E0;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 800px;
+            width: 100%
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #333;
+        }
+        .button-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            allign-items: center;
+        }
+        a {
+            text-decoration: none;
+            padding: 12px 24px;
+            color: #000;
+            background-color: #FFDB58;
+            border-radius: 6px;
+            transition: background-color 0.3s, transform 0.3s;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 150px; 
+            height: 50px;
+        }
+        a:hover {
+            background-color: #E1C16E;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome, {{ request.user.username }}</h2>
+        <div class="button-container">
+            <a href="{% url 'new_data' %}">Add New Data</a>
+            <a href="{% url 'view_data' %}">View Your Data</a>
+            <a href="{% url 'nmap_tool' %}">Run Nmap</a>
+            <a href="{% url 'run_pwnxss' %}">Run PwnXSS</a>
+            <a href="{% url 'run_xsstrike' %}">Run Xsstrike</a>
+            <a href="{% url 'tool_results' %}">Tools History</a>
+            <a href="{% url 'upload_and_train' %}">Training Dataset</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

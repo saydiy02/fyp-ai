@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: #6c63ff; 
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #E1CI6E; 
+        }
+        .container {
+            background-color: #FFF7E0; 
+        }
+        body {
+            background-color: #FFF2CC; 
+        }
+        .intro-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .intro-card h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #444;
+        }
+        .intro-card p {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Penetration Testing Tools Recommendation System</h1>
+        <div class="intro-card">
+            <h2>What We Offer</h2>
+            <p>Our platform helps you select the best penetration testing tools for Cross-Site Scripting (XSS) based on your goals, XSS types, skill levels, and platform used. Whether you're a beginner or an expert, we provide tailored recommendations to help you with your security assessments focusing on XSS attack. Explore our tools and enhance your penetration testing strategies with us!</p>
+        </div>
+        
+        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+
+        <p>New user? <a href="{% url 'register' %}">Register</a></p>
+    </div>
+</body>
+</html>

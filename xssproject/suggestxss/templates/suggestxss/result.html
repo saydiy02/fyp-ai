@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #FFF2CC;
+            color: #444;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #FFF7E0;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h2 {
+            font-size: 30px;
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #FFDB58;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #FFDB58;
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+        .button-container {
+            margin-top: 30px;
+        }
+        a {
+            text-decoration: none;
+            padding: 12px 24px;
+            color: #333;
+            background-color: #FFDB58;
+            border-radius: 6px;
+            transition: background-color 0.3s, transform 0.3s;
+            margin: 5px;
+            display: inline-block;
+        }
+        a:hover {
+            background-color: #E1C16E;
+        }
+        .feedback-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .feedback-buttons button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            transition: background-color 0.3s, transform 0.3s;
+            color: white;
+        }
+        .feedback-buttons .agree {
+            background-color: #4CAF50;
+        }
+        .feedback-buttons .agree:hover {
+            background-color: #45A049;
+        }
+        .feedback-buttons .disagree {
+            background-color: #F44336;
+        }
+        .feedback-buttons .disagree:hover {
+            background-color: #E41E1E;
+        }
+        .feedback-message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+    <script>
+        function submitFeedback(agree, preferredSuggestion = null) {
+            const user_data_id = "{{ data.id }}";
+            const csrfToken = '{{ csrf_token }}';
+
+            fetch("{% url 'submit_feedback' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfToken
+                },
+                body: JSON.stringify({ user_data_id: user_data_id, agree: agree, preferred_suggestion: preferredSuggestion })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const feedbackMessage = document.getElementById('feedback-message');
+                const feedbackText = document.getElementById('feedback-text');
+                const feedbackButtons = document.querySelector('.feedback-buttons');
+
+                if (data.status === 'success') {
+                    feedbackText.innerText = "Feedback submitted successfully!";
+                } else {
+                    feedbackText.innerText = `Error: ${data.message}`;
+                }
+                feedbackMessage.style.display = 'block';
+                feedbackButtons.style.display = 'none';
+            })
+            .catch(error => {
+                const feedbackMessage = document.getElementById('feedback-message');
+                const feedbackText = document.getElementById('feedback-text');
+                feedbackText.innerText = `Error: ${error}`;
+                feedbackMessage.style.display = 'block';
+                document.querySelector('.feedback-buttons').style.display = 'none';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('agree').addEventListener('click', function() {
+                submitFeedback(true);
+            });
+
+            document.getElementById('disagree').addEventListener('click', function() {
+                const preferredSuggestion = prompt("What is your preferred suggestion?");
+                submitFeedback(false, preferredSuggestion);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Result</h2>
+        <table>
+            <tr>
+                <th>Goal</th>
+                <th>Attack Type</th>
+                <th>Skill Level</th>
+                <th>Automation</th>
+                <th>Platform</th>
+                <th>Tool 1</th>
+                <th>Tool 2</th>
+            </tr>
+            <tr>
+                <td>{{ data.get_goal_display }}</td>
+                <td>{{ data.get_attackT_display }}</td>
+                <td>{{ data.get_skill_display }}</td>
+                <td>{{ data.get_automation_display }}</td>
+                <td>{{ data.get_platform_display }}</td>
+                <td>
+                    {% if data.suggest == 0 or data.suggest == 1 %}
+                        <a class="suggestion-link" href="{% url 'nmap_tool' %}">Nmap</a>
+                    {% else %}
+                        Unknown
+                    {% endif %}
+                </td>
+                <td>
+                    {% if data.suggest == 0 %}
+                        <a class="suggestion-link" href="{% url 'run_pwnxss' %}">PwnXSS</a>
+                    {% elif data.suggest == 1 %}
+                        <a class="suggestion-link" href="{% url 'run_xsstrike' %}">XSStrike</a>
+                    {% else %}
+                        Unknown
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+
+        <div class="button-container">
+            <a href="{% url 'new_data' %}">Add New Data</a>
+            <a href="{% url 'view_data' %}">View All Data</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+        
+        <h2>Feedback</h2>
+        <div class="feedback-buttons">
+            <button id="agree" class="agree">Agree</button>
+            <button id="disagree" class="disagree">Disagree</button>
+        </div>
+
+        <div id="feedback-message" class="feedback-message" style="display: none;">
+            <p id="feedback-text"></p>
+        </div>
+    </div>
+</body>
+</html>
