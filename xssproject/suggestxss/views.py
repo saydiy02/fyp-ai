@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .forms import UserDataForm, UploadCSVForm
+from .forms import UserDataForm, UploadCSVForm, UploadModelForm
 from .models import UserData, Feedback, ToolResult
 import joblib
 from .helpers import prepare_input_data
@@ -364,14 +364,47 @@ def upload_and_train(request):
             print(f"Download link: {download_link}")
             print("Finished executing upload_and_train function successfully")
             return render(request, 'suggestxss/upload_and_train.html', {
+                'form': form,
                 'accuracy': accuracy,
+                'upload_model_form': UploadModelForm(),
                 'download_link': download_link
             })
+        elif 'model_file' in request.FILES:
+            upload_model_form = UploadModelForm(request.POST, request.FILES)
+            if upload_model_form.is_valid():
+                model_file = request.FILES['model_file']
+                model_file_name = 'model.pkl'
+                model_file_path = os.path.join(trained_models_dir, model_file_name)
+
+                try:
+                    if os.path.exists(model_file_path):
+                        os.rename(model_file_path, os.path.join(trained_models_dir, 'model.bka'))
+
+                    with open(model_file_path, 'wb+') as destination:
+                        for chunk in model_file.chunks():
+                            destination.write(chunk)
+
+                    return render(request, 'suggestxss/upload_and_train.html', {
+                        'form': UploadCSVForm(),
+                        'upload_model_form': upload_model_form,
+                        'message': 'Model uploaded successfully and the old model was changed into .bka file.'
+                    })
+
+                except SuspiciousFileOperation:
+                    return render(request, 'suggestxss/upload_and_train.html', {
+                        'form': UploadCSVForm(),
+                        'upload_model_form': upload_model_form,
+                        'message': 'Invalid file operation detected.'
+                    })
     else:
         form = UploadCSVForm()
+        upload_model_form = UploadModelForm()
     
     print("Finished executing upload_and_train function")
-    return render(request, 'suggestxss/upload_and_train.html', {'form': form})
+    return render(request, 'suggestxss/upload_and_train.html', {
+        'form': form,
+        'upload_model_form': upload_model_form
+    })
 
 def user_logout(request):
     print("Executing user_logout function")

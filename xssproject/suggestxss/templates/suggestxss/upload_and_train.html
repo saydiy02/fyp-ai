@@ -100,10 +100,21 @@
             {{ form.as_p }}
             <button type="submit">Upload and Train</button>
         </form>
+        <h1>Upload Trained Model</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ upload_model_form.as_p }}
+            <button type="submit">Upload Model</button>
+        </form>
         {% if accuracy %}
             <div class="result">
                 <h2>Model Accuracy: {{ accuracy }}</h2>
                 <a href="{{ download_link }}">Download Model PKL</a>
+            </div>
+        {% endif %}
+        {% if message %}
+            <div class="message">
+                <p>{{ message }}</p>
             </div>
         {% endif %}
         <div class="back-button">

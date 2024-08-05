@@ -9,3 +9,6 @@ class UserDataForm(forms.ModelForm):
 
 class UploadCSVForm(forms.Form):
     csv_file = forms.FileField()
+    
+class UploadModelForm(forms.Form):
+    model_file = forms.FileField()
